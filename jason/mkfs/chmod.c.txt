@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
+main(){
+	int ret;
+	int fd;
+	
+	ret = chmod("/home/huangya/tmp", S_IREAD);
+	if(-1 == ret){
+		perror("chmod fail");
+	}
+	fd = open("/etc/passwd", O_RDONLY);
+	ret = fchmod(fd, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
+	if(-1 == ret){
+		perror("fchmod fail");
+	}
+	close(fd);
+	return;
+}
